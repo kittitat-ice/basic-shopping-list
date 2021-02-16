@@ -1,5 +1,5 @@
 # basic-shopping-list
 
-MVVM Pattern
-Kodein
-Room
++MVVM Pattern
++Kodein
++Room
