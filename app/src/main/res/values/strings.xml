@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Basic Shopping List</string>
+    <string name="popup_summary">Adding %1$s %2$s to Shopping List</string>
+</resources>
