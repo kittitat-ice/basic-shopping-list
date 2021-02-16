@@ -18,15 +18,19 @@ import com.example.basicshoppinglist.view.shoppingList.ShoppingViewModel
 import com.example.basicshoppinglist.view.shoppingList.ShoppingViewModelFactory
 import com.example.basicshoppinglist.view.shoppingList.adapter.ShoppingItemAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import org.kodein.di.DI
+import org.kodein.di.DIAware
+import org.kodein.di.android.di
+import org.kodein.di.instance
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), DIAware {
+
+    override val di: DI by di()
+    private val factory: ShoppingViewModelFactory by instance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val database = ShoppingDatabase(this)
-        val repository = ShoppingRepository(database)
-        val factory = ShoppingViewModelFactory(repository)
 
         val viewModel = ViewModelProvider(this, factory).get(ShoppingViewModel::class.java)
 
@@ -35,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         rvShoppingList.layoutManager = LinearLayoutManager(this)
         rvShoppingList.adapter = adapter
 
-        viewModel.getAllShoppingItems().observe(this, Observer {
+        viewModel.getAllShoppingItems().observe(this, {
             adapter.shoppingList = it
             adapter.notifyDataSetChanged()
         })
